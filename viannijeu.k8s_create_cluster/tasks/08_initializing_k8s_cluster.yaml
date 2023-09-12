@@ -8,7 +8,7 @@
 
 - name: Initializing the cluster with endpoint and pod network 
   command: kubeadm init --pod-network-cidr {{ network_address_pod }} --kubernetes-version {{ verionk8s }} --control-plane-endpoint "192.168.10.100:8443" --upload-certs
-  when: ansible_hostname == "cp01"
+  when: node_name == "cp01"
   register: init_result
 
 - name: Copy configuration for regular user on the first master
@@ -18,42 +18,42 @@
     src: /etc/kubernetes/admin.conf
     owner: "{{ username }}"
     group: "{{ username }}"
-  when: node_role  == "master" and ansible_hostname == "cp01" and init_result.failed == false
+  when: node_role  == "master" and node_name == "cp01" and init_result.failed == false
 
 - name: Showing results
   debug:
     var: init_result
-  when: ansible_hostname == "cp01"
+  when: node_name == "cp01"
 
 - name: configuring of cluster network 
   become: False
   remote_user: automation
   command: kubectl apply -f {{ calico_github }} #https://docs.projectcalico.org/manifests/calico.yaml
-  when: node_role  == "master" and ansible_hostname == "cp01"
+  when: node_role  == "master" and node_name == "cp01"
 
 
 - name: generate command to join cluster 
   become: True
   shell: echo $(kubeadm token create --print-join-command) --control-plane --certificate-key $(kubeadm init phase upload-certs --upload-certs | grep -vw -e certificate -e Namespace)  > /cpjoincluster.sh
-  when: ansible_hostname == "cp01"
+  when: node_name == "cp01"
 
 - name: copy of generated join file from first cp to automation node
   fetch:
     src: /cpjoincluster.sh
     dest: /home/{{ username }}/
     flat: yes
-  when: ansible_hostname == "cp01"
+  when: node_name == "cp01"
 
 - name: copy join command to other control plane
   copy:
     src: /home/{{ username }}/cpjoincluster.sh
     dest: /cpjoincluster.sh
     mode: '0755'
-  when: ansible_hostname == "cp02" or ansible_hostname == "cp03"
+  when: node_name == "cp02" or node_name == "cp03"
 
 - name: Executing of join command
   shell: /./cpjoincluster.sh
-  when: ansible_hostname == "cp02" or ansible_hostname == "cp03"
+  when: node_name == "cp02" or node_name == "cp03"
 
 - name: Copy configuration for regular user
   copy:
@@ -62,7 +62,7 @@
     src: /etc/kubernetes/admin.conf
     owner: "{{ username }}"
     group: "{{ username }}"
-  when: ansible_hostname == "cp02" or ansible_hostname == "cp03"
+  when: node_name == "cp02" or node_name == "cp03"
 
 - name: deleting join files from control plane
   file:
