@@ -27,7 +27,7 @@
 
 - name: configuring of cluster network 
   become: False
-  remote_user: automation
+  remote_user: "{{ username }}"
   command: kubectl apply -f {{ calico_github }} #https://docs.projectcalico.org/manifests/calico.yaml
   when: node_role  == "master" and node_name == "cp01"
 
