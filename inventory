@@ -1,7 +1,7 @@
 [controlplane]
-cp01 ansible_host=cp01
-cp02 ansible_host=cp02
-cp03 ansible_host=cp03
+cp01 ansible_host=172.31.x.x ansible_ssh_private_key_file=ssh_key.pem
+cp02 ansible_host=172.31.x.x ansible_ssh_private_key_file=ssh_key.pem
+cp03 ansible_host=172.31.x.x ansible_ssh_private_key_file=ssh_key.pem
 
 [worker]
 
