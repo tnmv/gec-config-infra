@@ -1,0 +1,11 @@
+[controlplane]
+cp01 ansible_host=cp01
+cp02 ansible_host=cp02
+cp03 ansible_host=cp03
+
+[worker]
+
+[controlplane:vars]
+node_role=master
+#[controlplane:vars]
+#  node_role = master

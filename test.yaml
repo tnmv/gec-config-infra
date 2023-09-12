@@ -1,0 +1,10 @@
+---
+- name: test
+  hosts: cp01
+  tasks:
+  - name: liste le contenu
+    command: ls -l /
+    register: resultat
+  - name: display result
+    debug:
+      var: resultat

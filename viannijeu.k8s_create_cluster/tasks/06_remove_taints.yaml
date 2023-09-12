@@ -1,0 +1,17 @@
+---
+- name: Install Python Dependency - python3-pip
+  ansible.builtin.package:
+    name: python3-pip
+    state: present
+- name: Install pip kubernetes dependency through python-pip
+  ansible.builtin.pip:
+    name: kubernetes
+- name: Removing Kubernetes Taints on all control plane nodes
+  become: False
+  kubernetes.core.k8s_taint:
+    state: absent
+    name: "{{ ansible_hostname }}"
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      value: NoSchedule-

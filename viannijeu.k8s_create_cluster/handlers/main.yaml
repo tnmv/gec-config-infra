@@ -1,0 +1,16 @@
+---
+- name: Restart containerd
+  service: 
+    name: httpd
+    state: restarted
+    enabled: True
+- name: restart keepalived service
+  service:
+    name: keepalived
+    state: restarted
+    enabled: True
+- name: restart haproxy service
+  service:
+    name: haproxy
+    state: restarted
+    eled: True

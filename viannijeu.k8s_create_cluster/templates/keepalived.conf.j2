@@ -1,0 +1,39 @@
+! /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+global_defs {
+    router_id LVS_DEVEL
+}
+vrrp_script check_apiserver {
+  script "/etc/keepalived/check_apiserver.sh"
+  interval 3
+  weight -2
+  fall 10
+  rise 2
+}
+
+vrrp_instance VI_1 {
+    interface ens33 #variabiliser
+    virtual_router_id 151
+    {% if ansible_facts['hostname'] == "cp01" %}
+    state MASTER 
+    priority 255
+    {% endif %}
+    {% if ansible_facts['hostname'] == "cp02" %}
+    state SLAVE
+    priority 254
+    {% endif %}
+    {% if ansible_facts['hostname'] == "cp03" %}
+    STATE SLAVE
+    priority 253
+    {% endif %}
+    authentication {
+        auth_type PASS
+        auth_pass Gec-Inf0rmAt1QUE@2016-Z
+    }
+    virtual_ipaddress {
+        192.168.10.100/24 # variabiliser
+    }
+    track_script {
+        check_apiserver
+    }
+}

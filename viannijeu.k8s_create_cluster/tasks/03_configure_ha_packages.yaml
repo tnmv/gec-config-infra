@@ -1,0 +1,30 @@
+---
+- name: generate check_apiserver file for control plane
+  template:
+     src: check_apiserver.sh.j2
+     dest: /etc/keepalived/check_apiserver.sh
+     mode: 0755
+  notify: 
+  -  restart keepalived service
+- name: generate keepalived config file
+  template:
+     src: keepalived.conf.j2
+     dest: /etc/keepalived/keepalived.conf
+  notify: 
+  -  restart keepalived service
+- name: generate haproxy config file
+  template:
+     src: haproxy.cfg.j2
+     dest: /etc/haproxy/haproxy.cfg
+  notify: 
+  - restart haproxy service
+- name: restart keepalived
+  service:
+    name: keepalived
+    state: restarted
+    enabled: true
+- name: restart haproxy
+  service: 
+    name: haproxy
+    state: restarted
+    enabled: true

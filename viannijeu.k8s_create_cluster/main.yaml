@@ -1,0 +1,23 @@
+---
+- name: install and configure HA Kubernetes cluster
+  hosts: cp01,cp02,cp03
+  tasks:
+#---------------------------------------------------
+  
+  - name: install required packages
+    apt:
+      name: 
+        - haproxy
+        - keepalived
+        - curl
+      state: present
+#---------------------------------------------------
+  handlers:
+  - name: start service
+    service:
+       name: '{ item }'
+       state: started
+       enabled: True
+    loop: 
+    - haproxy
+    - keepalived

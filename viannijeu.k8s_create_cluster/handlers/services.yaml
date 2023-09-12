@@ -1,0 +1,6 @@
+---
+- name: Restart containerd
+  service: 
+    name: httpd
+    state: restarted
+    enabled: True

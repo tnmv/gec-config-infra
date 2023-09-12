@@ -1,0 +1,5 @@
+---
+- name: Installation and configuration of Kuernetes Cluster
+  hosts: all
+  roles:
+    - viannijeu.k8s_create_cluster
