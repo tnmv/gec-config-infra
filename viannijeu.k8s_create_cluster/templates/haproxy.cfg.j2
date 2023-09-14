@@ -49,6 +49,6 @@ backend apiserver
     mode tcp
     option ssl-hello-chk
     balance     roundrobin
-        server cp01 192.168.10.10:6443 check
-        server cp02 192.168.10.20:6443 check
-        server cp03 192.168.10.30:6443 check
+       {% for host in groups['db_servers'] %}
+        server {{ hostvars[host]['ansible_hostname'] }}  {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:6443 check
+       {% endfor %}
