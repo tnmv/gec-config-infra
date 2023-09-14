@@ -14,15 +14,15 @@ vrrp_script check_apiserver {
 vrrp_instance VI_1 {
     interface eth0 #variabiliser
     virtual_router_id 151
-    {% if ansible_facts['hostname'] == "cp01" %}
+    {% if ansible_inventory == "cp01" %}
     state MASTER 
     priority 255
     {% endif %}
-    {% if ansible_facts['hostname'] == "cp02" %}
+    {% if ansible_inventory == "cp02" %}
     state SLAVE
     priority 254
     {% endif %}
-    {% if ansible_facts['hostname'] == "cp03" %}
+    {% if ansible_inventory == "cp03" %}
     STATE SLAVE
     priority 253
     {% endif %}
