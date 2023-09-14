@@ -13,4 +13,3 @@
   import_tasks: 08_initializing_k8s_cluster.yaml
 - name: Removing control plane taints on master nodes
   import_tasks: 06_remove_taints.yaml
-  
