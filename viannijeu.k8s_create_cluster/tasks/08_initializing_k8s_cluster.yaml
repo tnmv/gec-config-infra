@@ -7,7 +7,7 @@
   when: node_role  == "master"
 
 - name: Initializing the cluster with endpoint and pod network 
-  command: kubeadm init --pod-network-cidr {{ network_address_pod }} --kubernetes-version {{ verionk8s }} --control-plane-endpoint "172.31.5.200:8443" --upload-certs
+  command: kubeadm init --pod-network-cidr {{ network_address_pod }} --kubernetes-version {{ verionk8s }} --control-plane-endpoint "{{ vip_address }}:8443" --upload-certs
   when: node_name == "cp01"
   register: init_result
 
