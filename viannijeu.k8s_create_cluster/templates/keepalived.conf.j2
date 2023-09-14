@@ -12,7 +12,7 @@ vrrp_script check_apiserver {
 }
 
 vrrp_instance VI_1 {
-    interface ens33 #variabiliser
+    interface eth0 #variabiliser
     virtual_router_id 151
     {% if ansible_facts['hostname'] == "cp01" %}
     state MASTER 
