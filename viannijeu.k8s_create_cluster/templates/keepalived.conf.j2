@@ -31,7 +31,7 @@ vrrp_instance VI_1 {
         auth_pass Gec-Inf0rmAt1QUE@2016-Z
     }
     virtual_ipaddress {
-        172.31.5.200/24 # variabiliser
+        "{{ vip_address }}"/20 # variabiliser
     }
     track_script {
         check_apiserver
