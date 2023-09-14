@@ -1,7 +1,7 @@
 ---
 - name: Restart containerd
   service: 
-    name: httpd
+    name: containerd
     state: restarted
     enabled: True
 - name: restart keepalived service
