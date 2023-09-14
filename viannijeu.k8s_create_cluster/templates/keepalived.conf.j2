@@ -15,15 +15,15 @@ vrrp_instance VI_1 {
     interface eth0 #variabiliser
     virtual_router_id 151
     {% if node_name == "cp01" %}
-    state MASTER 
+state MASTER 
     priority 255
     {% endif %}
     {% if node_name == "cp02" %}
-    state SLAVE
+state SLAVE
     priority 254
     {% endif %}
     {% if node_name == "cp03" %}
-    STATE SLAVE
+STATE SLAVE
     priority 253
     {% endif %}
     authentication {
