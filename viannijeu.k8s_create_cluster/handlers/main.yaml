@@ -13,4 +13,4 @@
   service:
     name: haproxy
     state: restarted
-    eled: True
+    enabled: True
