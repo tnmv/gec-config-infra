@@ -31,7 +31,7 @@ state SLAVE
         auth_pass Gec-Inf0rmAt1QUE@2016-Z
     }
     virtual_ipaddress {
-        {{ vip_address }}/20 # variabiliser
+        {{ vip_address }}/24 # variabiliser
     }
     track_script {
         check_apiserver
