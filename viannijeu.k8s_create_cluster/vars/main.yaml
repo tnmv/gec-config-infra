@@ -14,7 +14,7 @@ packages_k8s:
 ha_packages:
   - name: keepalived
   - name: haproxy
-vip_address: "172.31.30.200"
+vip_address: "192.168.10.200"
 repository_key_k8s: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 repository_deb_k8s: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
 network_address_pod: "192.168.0.0/16"
